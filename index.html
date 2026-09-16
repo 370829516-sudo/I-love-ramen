@@ -1,0 +1,292 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>샌드위치 수령 대작전! 🥪</title>
+    <style>
+        :root {
+            --primary-color: #ff6b6b;
+            --secondary-color: #4ecdc4;
+            --accent-color: #ffe66d;
+            --bg-color: #f7f9fc;
+            --text-color: #2f3542;
+            --card-bg: #ffffff;
+            --grass-green: #2ed573;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Pretendard', 'Noto Sans KR', -apple-system, BlinkMacSystemFont, system-ui, Roboto, sans-serif;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 600px;
+            background: var(--card-bg);
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+            overflow: hidden;
+            border: 2px solid #eef2f5;
+        }
+
+        header {
+            background: linear-gradient(135deg, #ff9ff3, #feca57);
+            color: #fff;
+            padding: 25px 20px;
+            text-align: center;
+            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.15);
+        }
+
+        header h1 {
+            font-size: 24px;
+            font-weight: 800;
+            margin-bottom: 6px;
+        }
+
+        header p {
+            font-size: 14px;
+            opacity: 0.95;
+        }
+
+        .game-screen {
+            padding: 30px 20px;
+            text-align: center;
+            min-height: 380px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .scene-illustration {
+            font-size: 80px;
+            margin: 15px 0;
+            min-height: 100px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            animation: bounce 2s infinite ease-in-out;
+        }
+
+        @keyframes bounce {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-8px); }
+        }
+
+        .shake {
+            animation: shakeAnim 0.5s cubic-bezier(.36,.07,.19,.97) both;
+        }
+
+        @keyframes shakeAnim {
+            10%, 90% { transform: translate3d(-1px, 0, 0); }
+            20%, 80% { transform: translate3d(2px, 0, 0); }
+            30%, 50%, 70% { transform: translate3d(-4px, 0, 0); }
+            40%, 60% { transform: translate3d(4px, 0, 0); }
+        }
+
+        .story-text {
+            font-size: 17px;
+            line-height: 1.6;
+            word-break: keep-all;
+            color: #485460;
+            margin-bottom: 20px;
+            font-weight: 500;
+            min-height: 80px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .choices-container {
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .btn-choice {
+            background-color: #ffffff;
+            border: 2px solid #e1e8ef;
+            border-radius: 12px;
+            padding: 14px 20px;
+            font-size: 15px;
+            font-weight: 600;
+            color: #2f3542;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            text-align: center;
+            width: 100%;
+        }
+
+        .btn-choice:hover {
+            border-color: var(--secondary-color);
+            background-color: #f0fdfd;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(78, 205, 196, 0.2);
+        }
+
+        .btn-choice:active {
+            transform: translateY(0);
+        }
+
+        .status-bar {
+            background-color: #f1f2f6;
+            padding: 10px 15px;
+            display: flex;
+            justify-content: space-around;
+            font-size: 13px;
+            color: #57606f;
+            border-top: 1px solid #e5e9f0;
+            font-weight: 600;
+        }
+
+        footer {
+            margin-top: 20px;
+            font-size: 12px;
+            color: #a4b0be;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <header>
+            <h1>🥪 샌드위치 수령 대작전!</h1>
+            <p>띵동! 배달이 완료되었습니다. 무사히 받을 수 있을까요?</p>
+        </header>
+
+        <div class="game-screen" id="game-screen">
+            <div class="scene-illustration" id="illustration">🔔</div>
+            <div class="story-text" id="story-text">
+                딩동! 기다리던 배달원 아저씨의 벨소리가 들립니다!<br>
+                문앞에는 따끈따끈한 프리미엄 샌드위치가 기다리고 있습니다.
+            </div>
+
+            <div class="choices-container" id="choices">
+                <button class="btn-choice" onclick="makeChoice(1)">신발을 거꾸로 신더라도 총알같이 튀어나간다!</button>
+                <button class="btn-choice" onclick="makeChoice(2)">슬리퍼를 제대로 챙겨 신고 침착하게 걸어간다.</button>
+                <button class="btn-choice" onclick="makeChoice(3)">우선 문틈으로 배달원이 갔는지 살짝 본다.</button>
+            </div>
+        </div>
+
+        <div class="status-bar">
+            <span>배고픔: 100% 🤤</span>
+            <span>샌드위치와의 거리: 15m 🏃</span>
+        </div>
+    </div>
+
+    <footer>
+        &copy; 샌드위치는 절대 포기할 수 없어! 인터랙티브 텍스트 게임
+    </footer>
+
+    <script>
+        const storyText = document.getElementById('story-text');
+        const illustration = document.getElementById('illustration');
+        const choicesContainer = document.getElementById('choices');
+        const gameScreen = document.getElementById('game-screen');
+
+        function triggerShake() {
+            gameScreen.classList.remove('shake');
+            void gameScreen.offsetWidth; // trigger reflow
+            gameScreen.classList.add('shake');
+        }
+
+        function makeChoice(choiceId) {
+            triggerShake();
+
+            if (choiceId === 1) {
+                // 서두르다가 위험
+                illustration.innerHTML = '⚡🏃‍♂️';
+                storyText.innerHTML = '너무 급한 나머지 현관문 턱에 발가락을 찧었습니다! 하지만 샌드위치의 고소한 냄새가 코끝을 스치자 통증마저 잊고 마당으로 돌진합니다.';
+                renderChoices([
+                    { text: '마당 잔디밭을 가로질러 숏컷으로 달린다!', nextId: 4 },
+                    { text: '돌다리를 돌아서 안정적으로 달린다!', nextId: 5 }
+                ]);
+            } else if (choiceId === 2) {
+                // 침착하게 행동
+                illustration.innerHTML = '🚶‍♂️💨';
+                storyText.innerHTML = '침착하게 슬리퍼를 잘 꿰어 차고 현관문을 열었습니다. 저 멀리 대문 앞에 놓인 따끈따끈한 샌드위치 상자가 보입니다!';
+                renderChoices([
+                    { text: '냄새를 맡고 참지 못해 갑자기 질주한다!', nextId: 4 },
+                    { text: '사뿐사뿐 신중하게 발걸음을 옮긴다.', nextId: 5 }
+                ]);
+            } else if (choiceId === 3) {
+                // 엿보기
+                illustration.innerHTML = '👀🚪';
+                storyText.innerHTML = '배달원 아저씨는 이미 떠나고 없습니다. 대문 앞엔 덩그러니 놓인 샌드위치가 시선을 강탈합니다. 침이 꼴깍 넘어갑니다!';
+                renderChoices([
+                    { text: '더 이상 참을 수 없다! 바람처럼 뛰어간다!', nextId: 4 },
+                    { text: '샌드위치를 향해 엄숙하고 거침없이 걸어간다.', nextId: 5 }
+                ]);
+            } else if (choiceId === 4 || choiceId === 5) {
+                // 어떤 선택을 하든 무조건 풀숲 넘어지기로 연결
+                triggerFallScene();
+            }
+        }
+
+        // 필연적인 결말: 풀숲으로 넘어짐
+        function triggerFallScene() {
+            illustration.innerHTML = '🌿💥😱';
+            storyText.innerHTML = '<b>[콰당탕-!]</b><br>아차 하는 순간, 발끝이 무언가에 걸려 중심을 잃었습니다!<br>몸이 공중에 붕 떠오르더니 옆에 있던 무성한 <b>풀숲 속으로 대차게 엎어지고 말았습니다!</b> 🌾🌿';
+            
+            renderChoices([
+                { text: '풀숲에서 오뚝이처럼 툭툭 털고 일어난다!', nextId: 'get_up' }
+            ]);
+        }
+
+        // 넘어졌다 일어난 후 샌드위치 수령
+        function getUpAndReceive() {
+            illustration.innerHTML = '✨🥪😋';
+            storyText.innerHTML = '머리에 무성한 풀잎을 얹은 채로, 꿋꿋하게 다시 일어났습니다!<br>무릎은 흙범벅이 되었지만, 대문 앞의 <b>샌드위치는 온전하게 무사합니다!</b><br><br>🎉 <b>[성공]</b> 샌드위치를 품에 안고 세상에서 가장 행복한 표정으로 집으로 돌아옵니다!';
+            
+            renderChoices([
+                { text: '처음부터 다시 도전하기 (다시 먹으러 가기)', nextId: 'restart' }
+            ]);
+        }
+
+        function renderChoices(options) {
+            choicesContainer.innerHTML = '';
+            options.forEach(opt => {
+                const button = document.createElement('button');
+                button.className = 'btn-choice';
+                button.innerText = opt.text;
+                button.onclick = () => {
+                    if (opt.nextId === 'get_up') {
+                        getUpAndReceive();
+                    } else if (opt.nextId === 'restart') {
+                        restartGame();
+                    } else {
+                        makeChoice(opt.nextId);
+                    }
+                };
+                choicesContainer.appendChild(button);
+            });
+        }
+
+        function restartGame() {
+            illustration.innerHTML = '🔔';
+            storyText.innerHTML = '딩동! 기다리던 배달원 아저씨의 벨소리가 들립니다!<br>문앞에는 따끈따끈한 프리미엄 샌드위치가 기다리고 있습니다.';
+            renderChoices([
+                { text: '신발을 거꾸로 신더라도 총알같이 튀어나간다!', nextId: 1 },
+                { text: '슬리퍼를 제대로 챙겨 신고 침착하게 걸어간다.', nextId: 2 },
+                { text: '우선 문틈으로 배달원이 갔는지 살짝 본다.', nextId: 3 }
+            ]);
+        }
+    </script>
+</body>
+</html>
